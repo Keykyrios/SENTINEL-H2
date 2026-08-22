@@ -90,11 +90,11 @@ SENTINEL-H₂/
 
 CsH₂PO₄ undergoes a superprotonic phase transition at ~230°C. Below this transition, proton transport proceeds via a Grotthuss mechanism where the O–H···O double-well barrier is narrow enough (~0.1–0.3 Å) for quantum tunnelling to matter. The net hopping rate uses a Bell-type tunnelling correction:
 
-$$k(T) = \kappa(T) \cdot \nu_0 \exp\!\left(-\frac{E_a}{k_B T}\right)$$
+$$k(T) = \kappa(T) \cdot \nu_0 \exp\left(-\frac{E_a}{k_B T}\right)$$
 
 where the tunnelling transmission enhancement κ(T) is computed from a one-dimensional WKB integral over the double-well potential:
 
-$$\boxed{\kappa(T) = \frac{1}{k_B T}\int_0^{V_b} \exp\!\left(-\frac{2}{\hbar}\int_{x_1(E)}^{x_2(E)}\sqrt{2m_p\bigl(V(x)-E\bigr)}\,dx\right)\exp\!\left(-\frac{E}{k_B T}\right)dE}$$
+$$\boxed{\kappa(T) = \frac{1}{k_B T}\int_0^{V_b} \exp\left(-\frac{2}{\hbar}\int_{x_1(E)}^{x_2(E)}\sqrt{2m_p\bigl(V(x)-E\bigr)}\,dx\right)\exp\left(-\frac{E}{k_B T}\right)dE}$$
 
 - **m_p**: proton mass
 - **V(x)**: double-well potential along the O–H···O coordinate
@@ -125,11 +125,11 @@ $$\theta_{i,g} = \frac{C_{i,g}\, f_g}{1 + \sum_{g'} C_{i,g'}\, f_{g'}}$$
 
 where f_g is guest fugacity and C_{i,g}(T) is the Langmuir constant computed from a **Kihara cell-potential integral** over the cage geometry:
 
-$$C_{i,g}(T) = \frac{4\pi}{k_B T}\int_0^{R_{\text{cage}}} \exp\!\left(-\frac{w(r)}{k_B T}\right) r^2\, dr$$
+$$C_{i,g}(T) = \frac{4\pi}{k_B T}\int_0^{R_{\text{cage}}} \exp\left(-\frac{w(r)}{k_B T}\right) r^2\, dr$$
 
 **Water chemical potential change** on hydrate formation:
 
-$$\frac{\Delta\mu_w^{\,\beta-H}}{RT} = -\sum_i \nu_i \ln\!\left(1 - \sum_g \theta_{i,g}\right)$$
+$$\frac{\Delta\mu_w^{\,\beta-H}}{RT} = -\sum_i \nu_i \ln\left(1 - \sum_g \theta_{i,g}\right)$$
 
 with ν_small = 2/17, ν_large = 1/17 for sII.
 
@@ -244,7 +244,7 @@ $$\mathbf{B}_k = \mathbf{H}_k \odot \mathbf{R}_k$$
 
 **Bundling** (majority-sum across all K channels):
 
-$$\mathbf{S}(t) = \text{sign}\!\left(\sum_{k=1}^{K} \mathbf{B}_k(t)\right)$$
+$$\mathbf{S}(t) = \text{sign}\left(\sum_{k=1}^{K} \mathbf{B}_k(t)\right)$$
 
 **Classification** by cosine similarity against learned prototypes:
 
@@ -272,7 +272,7 @@ Five hazard classes:
 
 The six pillars are coupled — not merely juxtaposed — through a single scalar **system safety-performance functional** Ψ, evaluated over the drive-cycle time horizon [0, T] and climate envelope Ω:
 
-$$\boxed{\Psi = \int_0^{\mathcal{T}}\!\!\int_\Omega \underbrace{\bigl[\kappa(T)\,\sigma_0\,e^{-E_a/k_BT}\bigr]}_{\text{§3: tunnelling transport}} \cdot \underbrace{\bigl[1-\sum_g\theta_{i,g}(P,T)\bigr]^{-1}}_{\text{§4: hydrate storage margin}} \cdot \underbrace{\exp\!\bigl[-\tfrac{1}{2}(\Delta\omega_{\text{split}})^{-2}\bigr]}_{\text{§7: EP leak sensitivity}} \cdot \underbrace{\mathcal{L}(\mathbf{y}_{AE}\mid\boldsymbol{\theta}_{\text{deg}})}_{\text{§6: AE likelihood}} \;d\Omega\,dt \;-\; \lambda\!\sum_{c\in\mathcal{P}}\lVert\mathbf{S}(t)-\mathbf{P}_c\rVert_H}$$
+$$\boxed{\Psi = \int_0^{\mathcal{T}}\!\!\int_\Omega \underbrace{\bigl[\kappa(T)\,\sigma_0\,e^{-E_a/k_BT}\bigr]}_{\text{§3: tunnelling transport}} \cdot \underbrace{\bigl[1-\sum_g\theta_{i,g}(P,T)\bigr]^{-1}}_{\text{§4: hydrate storage margin}} \cdot \underbrace{\exp\bigl[-\tfrac{1}{2}(\Delta\omega_{\text{split}})^{-2}\bigr]}_{\text{§7: EP leak sensitivity}} \cdot \underbrace{\mathcal{L}(\mathbf{y}_{AE}\mid\boldsymbol{\theta}_{\text{deg}})}_{\text{§6: AE likelihood}} \;d\Omega\,dt \;-\; \lambda\sum_{c\in\mathcal{P}}\lVert\mathbf{S}(t)-\mathbf{P}_c\rVert_H}$$
 
 **Module:** [`orchestrator.py`](backend/orchestrator.py) — evaluates Ψ numerically over simulated drive-cycles.
 
