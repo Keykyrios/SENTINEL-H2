@@ -272,7 +272,7 @@ Five hazard classes:
 
 The six pillars are coupled — not merely juxtaposed — through a single scalar **system safety-performance functional** Ψ, evaluated over the drive-cycle time horizon [0, T] and climate envelope Ω:
 
-$$\boxed{\Psi = \int_0^{\mathcal{T}}\!\!\int_\Omega \underbrace{\bigl[\kappa(T)\,\sigma_0\,e^{-E_a/k_BT}\bigr]}_{\text{§3: tunnelling transport}} \cdot \underbrace{\bigl[1-\sum_g\theta_{i,g}(P,T)\bigr]^{-1}}_{\text{§4: hydrate storage margin}} \cdot \underbrace{\exp\bigl[-\tfrac{1}{2}(\Delta\omega_{\text{split}})^{-2}\bigr]}_{\text{§7: EP leak sensitivity}} \cdot \underbrace{\mathcal{L}(\mathbf{y}_{AE}\mid\boldsymbol{\theta}_{\text{deg}})}_{\text{§6: AE likelihood}} \;d\Omega\,dt \;-\; \lambda\sum_{c\in\mathcal{P}}\lVert\mathbf{S}(t)-\mathbf{P}_c\rVert_H}$$
+$$\boxed{\Psi = \int_0^{\mathcal{T}}\int_\Omega \underbrace{\bigl[\kappa(T)\,\sigma_0\,e^{-E_a/k_BT}\bigr]}_{\text{§3: tunnelling transport}} \cdot \underbrace{\bigl[1-\sum_g\theta_{i,g}(P,T)\bigr]^{-1}}_{\text{§4: hydrate storage margin}} \cdot \underbrace{\exp\bigl[-\tfrac{1}{2}(\Delta\omega_{\text{split}})^{-2}\bigr]}_{\text{§7: EP leak sensitivity}} \cdot \underbrace{\mathcal{L}(\mathbf{y}_{AE}\mid\boldsymbol{\theta}_{\text{deg}})}_{\text{§6: AE likelihood}} \;d\Omega\,dt \;-\; \lambda\sum_{c\in\mathcal{P}}\lVert\mathbf{S}(t)-\mathbf{P}_c\rVert_H}$$
 
 **Module:** [`orchestrator.py`](backend/orchestrator.py) — evaluates Ψ numerically over simulated drive-cycles.
 
