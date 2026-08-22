@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENTINEL-H₂ Simulation Console</title>
+  <meta name="description" content="Multi-physics simulation dashboard for the SENTINEL-H₂ fuel cell vehicle architecture. Six simulation pillars plus unified system integration.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- LEFT RAIL -->
+  <nav id="rail" aria-label="Pillar navigation">
+    <div class="rail-header">
+      <span class="rail-title">SENTINEL-H<sub>2</sub></span>
+    </div>
+    <div class="rail-items">
+      <button class="rail-item active" data-pillar="1" id="nav-p1">
+        <span class="rail-number">01</span>
+        <span class="rail-label">ELECTROLYTE</span>
+      </button>
+      <button class="rail-item" data-pillar="2" id="nav-p2">
+        <span class="rail-number">02</span>
+        <span class="rail-label">HYDRATE STORAGE</span>
+      </button>
+      <button class="rail-item" data-pillar="3" id="nav-p3">
+        <span class="rail-number">03</span>
+        <span class="rail-label">GDL / LBM</span>
+      </button>
+      <button class="rail-item" data-pillar="4" id="nav-p4">
+        <span class="rail-number">04</span>
+        <span class="rail-label">AE INVERSION</span>
+      </button>
+      <button class="rail-item" data-pillar="5" id="nav-p5">
+        <span class="rail-number">05</span>
+        <span class="rail-label">EP SENSOR</span>
+      </button>
+      <button class="rail-item" data-pillar="6" id="nav-p6">
+        <span class="rail-number">06</span>
+        <span class="rail-label">HDC FUSION</span>
+      </button>
+      <div class="rail-divider"></div>
+      <button class="rail-item" data-pillar="sys" id="nav-sys">
+        <span class="rail-number">SYS</span>
+        <span class="rail-label">INTEGRATION</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content">
+    <!-- TOP STRIP -->
+    <header id="top-strip">
+      <div class="strip-left">
+        <span class="status-dot" id="global-status-dot"></span>
+        <span class="strip-text" id="strip-status">IDLE</span>
+      </div>
+      <div class="strip-center">
+        <span class="strip-label">DRIVE CYCLE</span>
+        <span class="strip-value" id="strip-drive">—</span>
+        <span class="strip-sep">·</span>
+        <span class="strip-label">CLIMATE</span>
+        <span class="strip-value" id="strip-climate">—</span>
+      </div>
+      <div class="strip-right">
+        <span class="strip-label">Ψ</span>
+        <span class="strip-value strip-psi" id="strip-psi">—</span>
+      </div>
+    </header>
+
+    <!-- PILLAR VIEWS -->
+    <div id="pillar-views">
+      <!-- Pillar 1 -->
+      <section class="pillar-view active" id="view-1">
+        <div class="pillar-header">
+          <h1><span class="pillar-num">01</span> <em>Solid-Acid Electrolyte</em></h1>
+          <p class="pillar-scope">Tunnelling-enhanced proton transport in CsH₂PO₄ with grain-boundary strain doping</p>
+        </div>
+        <div class="pillar-body">
+          <div class="control-surface" id="controls-1">
+            <div class="param-group">
+              <label class="param-label">BARRIER HEIGHT V<sub>b</sub></label>
+              <div class="param-row">
+                <input type="range" min="0.1" max="0.5" step="0.01" value="0.3" id="p1-vb">
+                <span class="param-value" id="p1-vb-val">0.30 eV</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">BARRIER WIDTH <em>a</em></label>
+              <div class="param-row">
+                <input type="range" min="0.1" max="0.3" step="0.005" value="0.2" id="p1-a">
+                <span class="param-value" id="p1-a-val">0.200 Å</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">GB STRAIN</label>
+              <div class="param-row">
+                <input type="range" min="0" max="10" step="0.5" value="5" id="p1-strain">
+                <span class="param-value" id="p1-strain-val">5.0 %</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">TEMPERATURE RANGE</label>
+              <div class="param-row-dual">
+                <input type="number" min="100" max="250" value="150" id="p1-tmin" class="param-input">
+                <span class="param-sep">–</span>
+                <input type="number" min="100" max="300" value="230" id="p1-tmax" class="param-input">
+                <span class="param-unit">°C</span>
+              </div>
+            </div>
+            <button class="run-btn" id="run-p1">RUN SIMULATION</button>
+          </div>
+          <div class="output-surface" id="output-1">
+            <div class="chart-grid">
+              <div class="chart-slot" id="chart-p1-kappa"></div>
+              <div class="chart-slot" id="chart-p1-sigma"></div>
+              <div class="chart-slot" id="chart-p1-vcell"></div>
+              <div class="chart-slot" id="chart-p1-asr"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="pillar-footer">
+          <span class="metric-label">ASR</span>
+          <span class="metric-value" id="metric-p1">— <span class="metric-unit">Ω·cm²</span></span>
+        </footer>
+      </section>
+
+      <!-- Pillar 2 -->
+      <section class="pillar-view" id="view-2">
+        <div class="pillar-header">
+          <h1><span class="pillar-num">02</span> <em>Clathrate-Hydrate Storage</em></h1>
+          <p class="pillar-scope">Defect-engineered sII hydrate cartridge with dual-promoter chemistry</p>
+        </div>
+        <div class="pillar-body">
+          <div class="control-surface" id="controls-2">
+            <div class="param-group">
+              <label class="param-label">TEMPERATURE</label>
+              <div class="param-row">
+                <input type="range" min="270" max="285" step="0.5" value="279" id="p2-temp">
+                <span class="param-value" id="p2-temp-val">279.0 K</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">PRESSURE RANGE</label>
+              <div class="param-row-dual">
+                <input type="number" min="1" max="20" value="1" id="p2-pmin" class="param-input">
+                <span class="param-sep">–</span>
+                <input type="number" min="1" max="30" value="15" id="p2-pmax" class="param-input">
+                <span class="param-unit">MPa</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">PROMOTER RATIO</label>
+              <div class="param-row">
+                <input type="range" min="0" max="1" step="0.05" value="0.5" id="p2-pratio">
+                <span class="param-value" id="p2-pratio-val">0.50</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">DEFECT DOSE</label>
+              <div class="param-row">
+                <input type="range" min="0" max="1" step="0.05" value="0" id="p2-dose">
+                <span class="param-value" id="p2-dose-val">0.00</span>
+              </div>
+            </div>
+            <button class="run-btn" id="run-p2">RUN SIMULATION</button>
+          </div>
+          <div class="output-surface" id="output-2">
+            <div class="chart-grid">
+              <div class="chart-slot" id="chart-p2-occupancy"></div>
+              <div class="chart-slot" id="chart-p2-wt"></div>
+              <div class="chart-slot" id="chart-p2-dose"></div>
+              <div class="chart-slot" id="chart-p2-stability"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="pillar-footer">
+          <span class="metric-label">CAPACITY</span>
+          <span class="metric-value" id="metric-p2">— <span class="metric-unit">wt% H₂</span></span>
+        </footer>
+      </section>
+
+      <!-- Pillar 3 -->
+      <section class="pillar-view" id="view-3">
+        <div class="pillar-header">
+          <h1><span class="pillar-num">03</span> <em>Gas Diffusion Layer</em></h1>
+          <p class="pillar-scope">D2Q9 Lattice-Boltzmann two-phase flow with Shan-Chen coupling, graded porosity</p>
+        </div>
+        <div class="pillar-body">
+          <div class="control-surface" id="controls-3">
+            <div class="param-group">
+              <label class="param-label">GRID SIZE</label>
+              <div class="param-row-dual">
+                <input type="number" min="40" max="150" value="80" id="p3-nx" class="param-input">
+                <span class="param-sep">×</span>
+                <input type="number" min="40" max="150" value="80" id="p3-ny" class="param-input">
+                <span class="param-unit">cells</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">POROSITY GRADIENT</label>
+              <div class="param-row-dual">
+                <input type="number" min="0.3" max="0.8" step="0.05" value="0.55" id="p3-por-bot" class="param-input">
+                <span class="param-sep">→</span>
+                <input type="number" min="0.3" max="0.9" step="0.05" value="0.75" id="p3-por-top" class="param-input">
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">AMBIENT TEMP</label>
+              <div class="param-row">
+                <input type="range" min="5" max="50" step="1" value="30" id="p3-temp">
+                <span class="param-value" id="p3-temp-val">30 °C</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">RELATIVE HUMIDITY</label>
+              <div class="param-row">
+                <input type="range" min="10" max="95" step="5" value="60" id="p3-rh">
+                <span class="param-value" id="p3-rh-val">60 %</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">LBM STEPS</label>
+              <div class="param-row">
+                <input type="range" min="100" max="1000" step="50" value="300" id="p3-steps">
+                <span class="param-value" id="p3-steps-val">300</span>
+              </div>
+            </div>
+            <button class="run-btn" id="run-p3">RUN SIMULATION</button>
+          </div>
+          <div class="output-surface" id="output-3">
+            <div class="chart-grid">
+              <div class="chart-slot" id="chart-p3-satmap"></div>
+              <div class="chart-slot" id="chart-p3-sattime"></div>
+              <div class="chart-slot" id="chart-p3-porosity"></div>
+              <div class="chart-slot" id="chart-p3-climate"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="pillar-footer">
+          <span class="metric-label">SATURATION</span>
+          <span class="metric-value" id="metric-p3">— <span class="metric-unit">fraction</span></span>
+        </footer>
+      </section>
+
+      <!-- Pillar 4 -->
+      <section class="pillar-view" id="view-4">
+        <div class="pillar-header">
+          <h1><span class="pillar-num">04</span> <em>Acoustic-Emission Inversion</em></h1>
+          <p class="pillar-scope">Bayesian MCMC inversion of synthetic AE data for stack state-of-health</p>
+        </div>
+        <div class="pillar-body">
+          <div class="control-surface" id="controls-4">
+            <div class="param-group">
+              <label class="param-label">TEST DURATION</label>
+              <div class="param-row">
+                <input type="range" min="100" max="2000" step="50" value="900" id="p4-tmax">
+                <span class="param-value" id="p4-tmax-val">900 h</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">AE NOISE LEVEL</label>
+              <div class="param-row">
+                <input type="range" min="0.01" max="0.2" step="0.01" value="0.05" id="p4-noise">
+                <span class="param-value" id="p4-noise-val">0.05</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">MCMC SAMPLES</label>
+              <div class="param-row">
+                <input type="range" min="500" max="5000" step="250" value="2000" id="p4-mcmc">
+                <span class="param-value" id="p4-mcmc-val">2000</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">INITIAL VOLTAGE</label>
+              <div class="param-row">
+                <input type="range" min="0.6" max="0.85" step="0.01" value="0.72" id="p4-v0">
+                <span class="param-value" id="p4-v0-val">0.72 V</span>
+              </div>
+            </div>
+            <button class="run-btn" id="run-p4">RUN SIMULATION</button>
+          </div>
+          <div class="output-surface" id="output-4">
+            <div class="chart-grid">
+              <div class="chart-slot" id="chart-p4-voltage"></div>
+              <div class="chart-slot" id="chart-p4-posterior"></div>
+              <div class="chart-slot" id="chart-p4-recovery"></div>
+              <div class="chart-slot" id="chart-p4-hist"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="pillar-footer">
+          <span class="metric-label">STATE OF HEALTH</span>
+          <span class="metric-value" id="metric-p4">— <span class="metric-unit">%</span></span>
+        </footer>
+      </section>
+
+      <!-- Pillar 5 -->
+      <section class="pillar-view" id="view-5">
+        <div class="pillar-header">
+          <h1><span class="pillar-num">05</span> <em>Exceptional-Point Sensor</em></h1>
+          <p class="pillar-scope">Non-Hermitian 2×2 eigenvalue system with √δκ sensitivity divergence near EP</p>
+        </div>
+        <div class="pillar-body">
+          <div class="control-surface" id="controls-5">
+            <div class="param-group">
+              <label class="param-label">BASE COUPLING κ</label>
+              <div class="param-row">
+                <input type="range" min="0.01" max="0.15" step="0.005" value="0.05" id="p5-kappa">
+                <span class="param-value" id="p5-kappa-val">0.050</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">PERTURBATION RANGE (log₁₀)</label>
+              <div class="param-row-dual">
+                <input type="number" min="-8" max="-2" value="-6" id="p5-dkmin" class="param-input">
+                <span class="param-sep">→</span>
+                <input type="number" min="-3" max="0" value="-1" id="p5-dkmax" class="param-input">
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">NOISE FLOOR</label>
+              <div class="param-row">
+                <input type="range" min="0.00001" max="0.001" step="0.00001" value="0.0001" id="p5-noise">
+                <span class="param-value" id="p5-noise-val">1.0e-4</span>
+              </div>
+            </div>
+            <button class="run-btn" id="run-p5">RUN SIMULATION</button>
+          </div>
+          <div class="output-surface" id="output-5">
+            <div class="chart-grid">
+              <div class="chart-slot" id="chart-p5-splitting"></div>
+              <div class="chart-slot" id="chart-p5-complex"></div>
+              <div class="chart-slot" id="chart-p5-gain"></div>
+              <div class="chart-slot" id="chart-p5-detect"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="pillar-footer">
+          <span class="metric-label">SENSITIVITY GAIN</span>
+          <span class="metric-value" id="metric-p5">— <span class="metric-unit">×</span></span>
+        </footer>
+      </section>
+
+      <!-- Pillar 6 -->
+      <section class="pillar-view" id="view-6">
+        <div class="pillar-header">
+          <h1><span class="pillar-num">06</span> <em>HDC Fusion Engine</em></h1>
+          <p class="pillar-scope">Hyperdimensional computing classifier with D=10,000 bipolar vectors, 5 hazard classes</p>
+        </div>
+        <div class="pillar-body">
+          <div class="control-surface" id="controls-6">
+            <div class="param-group">
+              <label class="param-label">TRAINING SAMPLES</label>
+              <div class="param-row">
+                <input type="range" min="100" max="2000" step="50" value="500" id="p6-ntrain">
+                <span class="param-value" id="p6-ntrain-val">500</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">TEST SAMPLES</label>
+              <div class="param-row">
+                <input type="range" min="50" max="500" step="25" value="200" id="p6-ntest">
+                <span class="param-value" id="p6-ntest-val">200</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">LEARNING RATE η</label>
+              <div class="param-row">
+                <input type="range" min="0.01" max="0.5" step="0.01" value="0.1" id="p6-eta">
+                <span class="param-value" id="p6-eta-val">0.10</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">SENSOR NOISE</label>
+              <div class="param-row">
+                <input type="range" min="0.01" max="0.5" step="0.01" value="0.1" id="p6-noise">
+                <span class="param-value" id="p6-noise-val">0.10</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">RETRAIN PASSES</label>
+              <div class="param-row">
+                <input type="range" min="1" max="10" step="1" value="3" id="p6-retrain">
+                <span class="param-value" id="p6-retrain-val">3</span>
+              </div>
+            </div>
+            <button class="run-btn" id="run-p6">RUN SIMULATION</button>
+          </div>
+          <div class="output-surface" id="output-6">
+            <div class="chart-grid">
+              <div class="chart-slot" id="chart-p6-confusion"></div>
+              <div class="chart-slot" id="chart-p6-accuracy"></div>
+              <div class="chart-slot" id="chart-p6-perclass"></div>
+              <div class="chart-slot" id="chart-p6-noise"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="pillar-footer">
+          <span class="metric-label">ACCURACY</span>
+          <span class="metric-value" id="metric-p6">— <span class="metric-unit">%</span></span>
+        </footer>
+      </section>
+
+      <!-- System -->
+      <section class="pillar-view" id="view-sys">
+        <div class="pillar-header">
+          <h1><span class="pillar-num">SYS</span> <em>Unified Ψ Functional</em></h1>
+          <p class="pillar-scope">Drive-cycle × climate-envelope integration of all six pillars (Eq 20)</p>
+        </div>
+        <div class="pillar-body">
+          <div class="control-surface" id="controls-sys">
+            <div class="param-group">
+              <label class="param-label">AMBIENT TEMP RANGE</label>
+              <div class="param-row-dual">
+                <input type="number" min="0" max="40" value="5" id="sys-tmin" class="param-input">
+                <span class="param-sep">–</span>
+                <input type="number" min="10" max="60" value="50" id="sys-tmax" class="param-input">
+                <span class="param-unit">°C</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">RH RANGE</label>
+              <div class="param-row-dual">
+                <input type="number" min="5" max="50" value="10" id="sys-rhmin" class="param-input">
+                <span class="param-sep">–</span>
+                <input type="number" min="50" max="100" value="95" id="sys-rhmax" class="param-input">
+                <span class="param-unit">%</span>
+              </div>
+            </div>
+            <div class="param-group">
+              <label class="param-label">CLIMATE GRID</label>
+              <div class="param-row">
+                <input type="range" min="5" max="15" step="1" value="10" id="sys-nclim">
+                <span class="param-value" id="sys-nclim-val">10</span>
+              </div>
+            </div>
+            <button class="run-btn" id="run-sys">RUN SYSTEM SWEEP</button>
+          </div>
+          <div class="output-surface" id="output-sys">
+            <div class="chart-grid">
+              <div class="chart-slot" id="chart-sys-psi"></div>
+              <div class="chart-slot" id="chart-sys-heatmap"></div>
+              <div class="chart-slot" id="chart-sys-kpi"></div>
+              <div class="chart-slot" id="chart-sys-factors"></div>
+            </div>
+          </div>
+        </div>
+        <footer class="pillar-footer">
+          <span class="metric-label">Ψ INTEGRATED</span>
+          <span class="metric-value" id="metric-sys">— </span>
+        </footer>
+      </section>
+    </div>
+
+    <!-- RUN LOG -->
+    <div id="run-log">
+      <div class="log-header">
+        <span class="log-title">RUN LOG</span>
+      </div>
+      <div class="log-body" id="log-body"></div>
+    </div>
+  </main>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
